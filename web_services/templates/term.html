@@ -28,6 +28,27 @@ $ q = term['q']
 	</dd>
 	<dt>last modified</dt>
 	<dd>$term.codeTableRecord[0]['entryTermLastMod']</dd>
+	<dt>exact match</dt>
+	
+	
+        $for item in term.codeTableRecord[0]['exactMatch']:
+            $code:
+                x = '/'.join(item.entryKey.split('/')[4:])
+            $ list = item.listKey
+	    
+	    $if(first==0):
+	      <h3 id="listh3">$dblist2name(list=list) ($list.split('/')[4:5][0])</h3>
+	      $ first = 1
+	      $ prev_list = list
+	    $else:
+	      $if list==prev_list:
+		$ pass 
+	      $else:
+		<h3 id="listh3">$dblist2name(list=list) ($list.split('/')[4:5][0])</h3>
+		$ prev_list = list
+		
+            <dd><a href="/services/vservs/term?term=$x&q=$q">$term2label(key=item.entryKey)</a></dd>
+        
 	<dt>broader terms</dt>
 	
 	

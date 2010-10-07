@@ -71,6 +71,11 @@ def gettermdetails(term=None, q=None):
         meta.codeTableRecord[0]['broadMatch'] = sorted(meta.codeTableRecord[0]['broadMatch'], key=lambda x: x.listKey, reverse=True)
     else:
         meta.codeTableRecord[0]['broadMatch'] = []
+    if hasattr(meta.codeTableRecord[0], 'exactMatch'):
+       meta.codeTableRecord[0]['exactMatch'] = sorted(meta.codeTableRecord[0]['exactMatch'], key=lambda x: x.listKey, reverse=True)
+    else:
+        meta.codeTableRecord[0]['exactMatch'] = []
+    
     return meta
 
 
