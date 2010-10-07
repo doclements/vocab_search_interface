@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <style>
+    body {
+        width:890px;
+        
+        margin:0 auto;
+        text-align:center;
+        padding-top:15%;
+    }
+    .query_box {
+        border-style:solid;
+        border-color:red;
+        border-width:1px;
+    }
+    form {
+        
+        vertical-align:middle;
+    }
+    
+    
+    
+    </style>
+    <link rel="search"
+          type="application/opensearchdescription+xml" 
+          href="/vocab_test/opensearch.xml"
+          title="NERC vocabulary server" />
+
+    <title>NERC Vocabulary Server</title>
+    <script type="text/javascript" src="/js/jquery-1.4.2.js"></script>
+    <script type="text/javascript">
+   $(function() {
+	$("#q").focus(function(){
+            
+            $("#q").val('');
+        }
+        );
+});
+    
+    </script>
+</head>
+<body>
+     <img src="/images/logo-nerc.png" style="float:left;position:relative;left:204px;top:10px;">  <h1 style="font-family:sans-serif">Vocabulary Server</h1>
+    <form action="/services/vservs/nerc" method="get">
+        <input type="text" name="q" id="q" value="Enter Search Term" class="query_box" />
+        <input type="submit" name="submit" value="Search" /> <br/> exact term only<input type="checkbox" name="wild" />
+    </form>
+    
+</body>
+</html>

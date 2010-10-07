@@ -1,0 +1,7 @@
+$def with (aphiaret)
+<?xml version="1.0"?>
+<AphiaIDResponse>
+<species>$aphiaret['species']</species>
+<aphiaid>$aphiaret['aphiaID']</aphiaid>
+</AphiaIDResponse>
+

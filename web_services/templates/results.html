@@ -1,0 +1,121 @@
+$def with (results)
+$code:
+    x = results['count']
+    
+    num = int(results['num'])
+    pages = (x/num)+1
+    q = results['q'][1:len(results['q'])-1]
+    w = results['wild']
+    
+    
+      
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <style>
+    body {
+        width:890px;
+        /*height:800px;*/
+        margin:0 auto;
+        padding-top:20px;
+        
+    }
+    .pagedemo{/*
+	border: 1px solid #CCC;
+	width:880px;
+        margin:2px;
+        background-color:white;	*/
+    }
+    .query_box {
+        border-style:solid;
+        border-color:red;
+        border-width:1px;
+    }
+    form {
+        
+        vertical-align:middle;
+    }
+    .img:link{color:#ffffff; text-decoration:none;}
+a.img:visited{color:#ffffff; text-decoration:none;}
+a.img:hover{color:#ffffff; text-decoration:none;}
+a.img:active{color:#ffffff; text-decoration:none;}
+ 
+img
+{
+  border-style: none;
+}
+
+    
+    
+    </style>
+    <title>NERC Vocabulary Server</title>
+    <script type="text/javascript" src="/js/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/js/jquery.paginate.js"></script>
+      <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+     <script type="text/javascript">
+     
+        $$(document).ready(function() {
+    $$('#rnum').change(function() {
+        
+    $$('#rnums').submit();
+    });
+    $$('.result_cont').paginate({
+				count 		: $pages,
+				start 		: 1,
+				display     : 27,
+				border					: false,
+				text_color  			: 'black',
+				background_color    	: 'none',	
+				text_hover_color  		: '#blue',
+				background_hover_color	: 'none', 
+				images					: true,
+				mouse					: 'press',
+				onChange     			: function(page){
+											$$('._current').removeClass('_current').hide();
+											$$('#result_block'+page).addClass('_current').show();
+										  }
+			});
+
+});
+     </script>
+    
+</head>
+<body>
+        <a href="/vocab/search.html"><img src="/images/logo-nerc.png" style="float:left;margin-top:10px;margin-left:25%;"> </a> <h1 style="font-family:sans-serif">Vocabulary Server</h1>
+<div class="summary" style="font-family:sans-serif;">
+	    <p style="font-size:0.9em;font-family:monospace;margin-bottom:1px;padding-bottom:1px;">results:  $x  from $results['listcount'] lists  in  $results['duration']s - displaying $num per page
+            <form action="/services/vservs/nerc" method="get" id="rnums">
+                <input type="hidden" name="q" value="$q"/>
+		<input type="hidden" name="wild" value="$w"/>
+    results/page<select id="rnum" name="num">
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="150">150</option>
+    </select>
+</form>
+            </p>
+</div>
+<hr style="margin-top:0px;"/>
+<div class="result_cont"></div>
+<div class="result_cont1">
+        $for index in range(len(results['results'])):
+            $if (index==0) or (index%num==0):
+              $ pnum = (index/num)+1
+              $if index==0:<div id="result_block$pnum" class="pagedemo _current" style="display:block;">
+              $else: <div id="result_block$pnum" class="pagedemo" style="display:none;">
+                $for index1 in range(num):
+                    $if (index+index1)<(len(results['results'])):
+                        <div id="res_item"S class="result_item" style="font-family:sans-serif;">
+                        <p class="term" style="margin-bottom:3px;"><a href="/services/vservs/term?q=$q&term=$results['results'][index+index1]['uri']">$results['results'][index+index1]['entryTerm'].encode("utf-8") ($results['results'][index+index1]['entryTermAbbr'].encode("utf-8"))</a></p>
+                        <p class="def" style="margin-top:3px;padding-top:0px;margin-bottom:3px;">$results['results'][index+index1]['entryTermDef'].encode("utf-8")</p>
+                        <p class="term_meta" style="margin-top:3px;padding-top:0px;color:#ABABAB;""><span class="meta_left" style="font-size:0.9em;">member of $dblist2name(list=results['results'][index+index1]['listKey']) ($results['results'][index+index1]['listKey'].split('/')[4:5][0])</span><span class="meta_right" style="position:relative;left:25px;font-size:0.9em;">show tree</span></p>  </div>
+              </div>         
+            
+</div>
+
+
+</body>
+</html>

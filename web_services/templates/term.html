@@ -1,0 +1,141 @@
+$def with (term)
+$ first = 0
+$ q = term['q']
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    
+ <link type="text/css" rel="stylesheet" href="/css/term.css"/>
+
+    <title>NERC Vocabulary Server</title>
+    <script type="text/javascript" src="/js/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/js/vocabsite.js"></script>
+</head>
+<body>
+    <a href="/vocab/search.html" style="border:0px"><img src="/images/logo-nerc.png" style="float:left;margin-top:10px;margin-left:25%;"></a>  <h1 style="font-family:sans-serif">Vocabulary Server</h1>
+    <div class="term_box" >
+    <h2>$dblist2name(term.codeTableRecord[0]['listKey']) > $term.codeTableRecord[0]['entryTerm']</h2>
+    <dl>
+	<dt>prefLabel</dt>
+	<dd>$term.codeTableRecord[0]['entryTerm']</dd>
+	<dt>altLabel</dt>
+	<dd>$term.codeTableRecord[0]['entryTermAbbr']</dd>
+	<dt>description</dt>
+	<dd>
+	$if((term.codeTableRecord[0]['entryTermDef']) != None):
+	      $term.codeTableRecord[0]['entryTermDef'].replace(u'\ax0',' ').encode('utf-8')
+	</dd>
+	<dt>last modified</dt>
+	<dd>$term.codeTableRecord[0]['entryTermLastMod']</dd>
+	<dt>broader terms</dt>
+	
+	
+        $for item in term.codeTableRecord[0]['broadMatch']:
+            $code:
+                x = '/'.join(item.entryKey.split('/')[4:])
+            $ list = item.listKey
+	    
+	    $if(first==0):
+	      <h3 id="listh3">$dblist2name(list=list) ($list.split('/')[4:5][0])</h3>
+	      $ first = 1
+	      $ prev_list = list
+	    $else:
+	      $if list==prev_list:
+		$ pass 
+	      $else:
+		<h3 id="listh3">$dblist2name(list=list) ($list.split('/')[4:5][0])</h3>
+		$ prev_list = list
+		
+            <dd><a href="/services/vservs/term?term=$x&q=$q">$term2label(key=item.entryKey)</a></dd>
+        
+        <dt>narrower terms</dt>
+	  
+	$for item in term.codeTableRecord[0]['narrowMatch']:
+            $code:
+                x = '/'.join(item.entryKey.split('/')[4:])
+            $ list = item.listKey
+	    
+	    $if(first==0):
+	      <h3 id="listh3">$dblist2name(list=list) ($list.split('/')[4:5][0])</h3>
+	      $ first = 1
+	      $ prev_list = list
+	    $else:
+	      $if list==prev_list:
+		$ pass 
+	      $else:
+		<h3 id="listh3">$dblist2name(list=list) ($list.split('/')[4:5][0])</h3>
+		$ prev_list = list
+	    
+            <dd><a href="/services/vservs/term?term=$x&q=$q">$term2label(key=item.entryKey)</a></dd>
+        
+        <dt>minor matches</dt>
+	
+
+	$for item in term.codeTableRecord[0]['minorMatch']:
+            $code:
+                x = '/'.join(item.entryKey.split('/')[4:])
+            $ list = item.listKey
+	    
+	    $if(first==0):
+	      <h3 id="listh3">$dblist2name(list=list) ($list.split('/')[4:5][0])</h3>
+	      $ first = 1
+	      $ prev_list = list
+	    $else:
+	      $if list==prev_list:
+		$ pass
+	      $else:
+		<h3 id="listh3">$dblist2name(list=list) ($list.split('/')[4:5][0])</h3>
+		$ prev_list = list
+	    
+            <dd><a href="/services/vservs/term?term=$x&q=$q">$term2label(key=item.entryKey)</a></dd>
+        
+	
+    </dl>
+</div>
+
+<div class="vocab_box" id="left">
+    <div><h2>Gemet related terms <a id="link1" href="javascript:populategemet('1')">+</a><img class="bar_spin" id="barspin1" src="" /></h2></div>
+    <div id="box1" class="box_cont"style="display:none">
+	<!--<p>Loading  <img src="/images/spinner.gif" alt="loading spinnir" style="align:right;display:inline;"/></p>-->
+	
+    </div>
+</div>
+<div class="vocab_box" id="right">
+    <h2>Inspire related terms <a id="link2" href="javascript:toggle('2')">+</a></h2>
+    <div id="box2" class="box_cont"style="display:none">
+    <p>some terms that are related, probably in a unordered list</p>
+    <ul>
+	<li>term1</li>
+	<li>term2</li>
+    </ul>
+    </div>
+</div>
+<div style="clear:both"></div>
+<div class="vocab_box" id="left">
+    <h2>L051 (instruments) related terms <a id="link3" href="javascript:toggle('3')">+</a></h2>
+    <div id="box3" class="box_cont"style="display:none">
+    <p>some terms that are related, probably in a unordered list</p>
+    <ul>
+	<li>term1</li>
+	<li>term2</li>
+    </ul>
+    </div>
+</div>
+<div class="vocab_box" id="right">
+    <h2>ONE Geology related terms <a id="link4" href="javascript:toggle('4')">+</a></h2>
+    <div id="box4" class="box_cont"style="display:none">
+    <p>some terms that are related, probably in a unordered list</p>
+    <ul>
+	<li>term1</li>
+	<li>term2</li>
+    </ul>
+    </div>
+</div>
+<div style"clear:both;width:100%"></div>
+</body>
+</html>
+
+    
+    
+      

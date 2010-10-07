@@ -1,0 +1,13 @@
+$def with (gemetret)
+$code:
+    x = len(gemetret)
+    
+
+<h3 class="rel_box_count">related terms found: $x</h3>
+<table>
+$for c in gemetret:
+    <tr class="rel_box_$loop.parity">
+        <td><a href="$c['uri']">$c['preferredLabel']['string']</a></td>
+    </tr>
+</table>
+

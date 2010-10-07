@@ -1,0 +1,7 @@
+$def with (code)
+<?xml version="1.0"?>
+<RequestNotification-Response>
+<Status>$code['code']</Status>
+<Status2>$code['code2']</Status2>
+</RequestNotification-Response>
+
