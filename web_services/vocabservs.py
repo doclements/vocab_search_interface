@@ -2,13 +2,15 @@ import web
 from suds.client import Client
 from django.utils.encoding import smart_str, smart_unicode
 from vocabutils import term2label, list2name
-
-
+import sys
 
 def dblist2name(list=None):
-    myvar = dict(uri=list)
-    results = db.select('lists', myvar, where="listuri = $uri")
-    return results[0].listname
+    try:
+        myvar = dict(uri=list)
+        results = db.select('lists', myvar, where="listuri = $uri")
+        return results[0].listname
+    except IndexError:
+        print >> sys.stderr, list
 
 globals = {'term2label': term2label, 'list2name' : list2name, 'dblist2name' : dblist2name}
 render = web.template.render('/var/www/web_services/templates', globals=globals,cache=True)
