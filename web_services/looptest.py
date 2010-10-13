@@ -7,7 +7,13 @@ mydatabase="./vocablists"
 connection=sqlite3.connect(mydatabase)
 cursor=connection.cursor()
 
+try:
+	cursor.execute('DROP TABLE lists')
+except sqlite3.OperationalError:
+	pass
 
+
+cursor.execute('CREATE TABLE lists (listuri text primary key, listname text)')
 ret = client.service.whatLists()
 for tlist in ret.codeTableType:
     #print tlist
@@ -17,7 +23,7 @@ for tlist in ret.codeTableType:
 #print list2name('http://vocab.ndg.nerc.ac.uk/list/L221/15')
 
 
-#cursor.execute('CREATE TABLE mytable (Id INTEGER PRIMARY KEY, Date TEXT, Entry TEXT)')
+
 
 connection.commit()
 cursor.close()
